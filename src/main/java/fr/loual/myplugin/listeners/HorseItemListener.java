@@ -43,6 +43,8 @@ public class HorseItemListener implements Listener {
     private final MyPlugin plugin;
     private AdvancementManager advancementManager;
     
+    private final java.util.Map<java.util.UUID, Long> lastInteractTick = new java.util.HashMap<>();
+
     public HorseItemListener(MyPlugin plugin) {
         this.plugin = plugin;
         this.advancementManager = plugin.getAdvancementManager();
@@ -94,9 +96,12 @@ public class HorseItemListener implements Listener {
 
         event.setCancelled(true);
 
-        if (event instanceof org.bukkit.event.player.PlayerInteractAtEntityEvent) {
+        long currentTick = Bukkit.getCurrentTick();
+        Long lastTick = lastInteractTick.get(player.getUniqueId());
+        if (lastTick != null && lastTick == currentTick) {
             return;
         }
+        lastInteractTick.put(player.getUniqueId(), currentTick);
 
         if (isVigor) {
             onVigorApple(plugin, horse, player, item);
@@ -115,6 +120,10 @@ public class HorseItemListener implements Listener {
         Player player = event.getPlayer();
         Action action = event.getAction();
 
+        if (item == null || item.isEmpty()) {
+            return;
+        }
+
         if (event.getHand() == EquipmentSlot.HAND && HorseAnalyzer.isHorseAnalyzer(plugin, item) && (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK)) {
             onHorseAnalyzer(plugin, event, item); 
         }
@@ -123,6 +132,30 @@ public class HorseItemListener implements Listener {
             onRacePass(plugin, item, player, event);
         }
 
+        if (event.getAction().isRightClick() && player.getVehicle() instanceof Horse horse) {
+            boolean isVigor = VigorApple.isVigorApple(plugin, item);
+            boolean isHaste = HasteBamboo.isHasteBamboo(plugin, item);
+            boolean isHealthy = HealthyGrass.isHealthyGrass(plugin, item);
+
+            if (isVigor || isHaste || isHealthy) {
+                event.setCancelled(true);
+
+                long currentTick = Bukkit.getCurrentTick();
+                Long lastTick = lastInteractTick.get(player.getUniqueId());
+                if (lastTick != null && lastTick == currentTick) {
+                    return;
+                }
+                lastInteractTick.put(player.getUniqueId(), currentTick);
+
+                if (isVigor) {
+                    onVigorApple(plugin, horse, player, item);
+                } else if (isHaste) {
+                    onHasteBamboo(plugin, horse, player, item);
+                } else if (isHealthy) {
+                    onHealthyGrass(plugin, horse, player, item);
+                }
+            }
+        }
     }
 
     @EventHandler
