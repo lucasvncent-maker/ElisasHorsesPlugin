@@ -24,6 +24,14 @@ java {
     }
 }
 
+tasks.compileJava {
+    options.encoding = "UTF-8"
+}
+
+tasks.processResources {
+    filteringCharset = "UTF-8"
+}
+
 tasks.register<Copy>("copyToServer") {
     dependsOn(tasks.jar)
     from(tasks.jar)

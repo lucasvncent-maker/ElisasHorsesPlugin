@@ -121,6 +121,9 @@ public class HorseRaceManager {
                     player.sendMessage("§6§lFélicitations ! §eVous avez terminé la course §6" + config.getName() + " §een §6" + String.format("%.2f", raceTime) + " §esecondes !");
                     player.sendMessage("§aVous obtenez des invitations à d'autres courses.");
                 }
+                if (raceId == 2) {
+                    plugin.getAdvancementManager().award(player, "win_race_2");
+                }
             } else {
                 player.sendMessage("§cVous terminez la course en §f" + String.format("%.2f", raceTime)+ " §csecondes.");
                 player.sendMessage("§7C'est bien, mais il faut au maximum §f" + String.format("%.2f", config.getMaxTime()) + " §7secondes afin d'obtenir des récompenses !");
@@ -236,10 +239,10 @@ public class HorseRaceManager {
 
                 raceConfigs.put(raceId, raceConfig);
 
-                plugin.getLogger().info("[MyPlugin] Course " + raceId + " chargée : " + name);
+                plugin.getLogger().info("[ElisasHorses] Course " + raceId + " chargée : " + name);
 
             } catch (NumberFormatException e) {
-                plugin.getLogger().warning("[MyPlugin] Fichier de course ignoré : " + file.getName()  + " (le nom doit être un nombre)");
+                plugin.getLogger().warning("[ElisasHorses] Fichier de course ignoré : " + file.getName()  + " (le nom doit être un nombre)");
             }
         }
     }
@@ -257,7 +260,7 @@ public class HorseRaceManager {
             // TODO Set to false when all well configured
             plugin.saveResource(resourcePath, true);
 
-            plugin.getLogger().info("[MyPlugin] Course copiée : " + resourcePath);
+            plugin.getLogger().info("[ElisasHorses] Course copiée : " + resourcePath);
         }
     }
 }

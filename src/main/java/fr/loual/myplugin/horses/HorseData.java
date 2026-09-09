@@ -31,9 +31,12 @@ public class HorseData {
         this.jumpLevel = 0;
         this.scaleLevel = 0;
         this.speedLevel = 0;
-        this.baseJumpStrength = horse.getAttribute(Attribute.JUMP_STRENGTH).getBaseValue();
-        this.baseSpeed = horse.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue();
-        this.baseHealth = horse.getAttribute(Attribute.MAX_HEALTH).getBaseValue();
+        org.bukkit.attribute.AttributeInstance jumpAttr = horse.getAttribute(Attribute.JUMP_STRENGTH);
+        this.baseJumpStrength = jumpAttr != null ? jumpAttr.getBaseValue() : 0.7;
+        org.bukkit.attribute.AttributeInstance speedAttr = horse.getAttribute(Attribute.MOVEMENT_SPEED);
+        this.baseSpeed = speedAttr != null ? speedAttr.getBaseValue() : 0.225;
+        org.bukkit.attribute.AttributeInstance healthAttr = horse.getAttribute(Attribute.MAX_HEALTH);
+        this.baseHealth = healthAttr != null ? healthAttr.getBaseValue() : 20.0;
         this.canFly = false;
         this.horse = horse;
     }
@@ -99,6 +102,13 @@ public class HorseData {
     }
 
     public Component getResume() {
+        org.bukkit.attribute.AttributeInstance speedAttr = this.horse.getAttribute(Attribute.MOVEMENT_SPEED);
+        double totalSpeed = speedAttr != null ? speedAttr.getValue() : getBaseSpeed();
+        org.bukkit.attribute.AttributeInstance jumpAttr = this.horse.getAttribute(Attribute.JUMP_STRENGTH);
+        double totalJump = jumpAttr != null ? jumpAttr.getValue() : getBaseJumpStrength();
+        org.bukkit.attribute.AttributeInstance healthAttr = this.horse.getAttribute(Attribute.MAX_HEALTH);
+        double totalHealth = healthAttr != null ? healthAttr.getValue() : getBaseHealth();
+
         return Component.text()
                 .append(Component.text("._.-. " + getHorseName() + " .-._.\n",NamedTextColor.GOLD))
                 .append(Component.text("- Vitesse de base: ", NamedTextColor.GRAY))
@@ -110,13 +120,13 @@ public class HorseData {
                 .append(Component.text("Bonus:\n", NamedTextColor.GREEN))
                 .append(Component.text("- Vitesse: ", NamedTextColor.GRAY))
                 .append(Component.text("%d/9 ".formatted((int) getSpeedLevel()), NamedTextColor.AQUA))
-                .append(Component.text("([Total] %.2f m/s)\n".formatted(this.horse.getAttribute(Attribute.MOVEMENT_SPEED).getValue()),  NamedTextColor.WHITE))
+                .append(Component.text("([Total] %.2f m/s)\n".formatted(totalSpeed),  NamedTextColor.WHITE))
                 .append(Component.text("- Saut: ", NamedTextColor.GRAY))
                 .append(Component.text("%d/9 ".formatted((int) getJumpLevel()), NamedTextColor.AQUA))
-                .append(Component.text("([Total] %.2f m)\n".formatted(this.horse.getAttribute(Attribute.JUMP_STRENGTH).getValue()), NamedTextColor.WHITE))
+                .append(Component.text("([Total] %.2f m)\n".formatted(totalJump), NamedTextColor.WHITE))
                 .append(Component.text("- PV: ", NamedTextColor.GRAY))
                 .append(Component.text("%d/9 ".formatted((int) getHealthLevel()), NamedTextColor.AQUA))
-                .append(Component.text("([Total] %.1f PV)".formatted(this.horse.getAttribute(Attribute.MAX_HEALTH).getValue()), NamedTextColor.WHITE))
+                .append(Component.text("([Total] %.1f PV)".formatted(totalHealth), NamedTextColor.WHITE))
                 .build();
     }
 

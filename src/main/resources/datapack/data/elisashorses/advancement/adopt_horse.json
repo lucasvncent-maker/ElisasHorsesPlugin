@@ -19,7 +19,7 @@
       "trigger": "minecraft:tame_animal",
       "conditions": {
         "entity": {
-          "minecraft:entity_type": "minecraft:horse"
+          "entity_type": "minecraft:horse"
         }
       }
     }

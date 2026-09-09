@@ -1,6 +1,10 @@
 {
   "pack": {
-    "pack_format": 63,
-    "description": "MyPlugin - Advancements"
+    "description": "ElisasHorses - Advancements",
+    "min_format": [
+      107,
+      1
+    ],
+    "max_format": 107
   }
 }

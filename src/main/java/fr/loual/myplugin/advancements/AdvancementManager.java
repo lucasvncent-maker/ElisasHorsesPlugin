@@ -21,12 +21,25 @@ public class AdvancementManager {
     }
 
     public void installDatapack() {
-        File datapack = new File(
+        File datapackFolder = new File(
+                Bukkit.getWorldContainer(),
+                "world/datapacks/elisashorses"
+        );
+
+        // Supprimer l'ancien dossier myplugin s'il existe
+        File oldDatapack = new File(
                 Bukkit.getWorldContainer(),
                 "world/datapacks/myplugin"
         );
+        if (oldDatapack.exists()) {
+            deleteDirectory(oldDatapack);
+        }
 
-        copy("datapack", datapack);
+        boolean copied = copyDatapack("datapack", datapackFolder);
+        if (copied) {
+            plugin.getLogger().info("Datapack elisashorses copié avec succès !");
+            Bukkit.reloadData();
+        }
     }
 
     public void award(Player player, String advancementId) {
@@ -51,57 +64,86 @@ public class AdvancementManager {
         player.discoverRecipe(key);
     }
 
-    private void copy(String resourcePath, File destination) {
+    private boolean copyDatapack(String resourcePath, File destination) {
         try {
             destination.mkdirs();
 
-            var resources = plugin.getClass()
-                    .getClassLoader()
-                    .getResources(resourcePath);
+            java.net.URL codeSource = plugin.getClass().getProtectionDomain().getCodeSource().getLocation();
+            File sourceFile = new File(codeSource.toURI());
 
-            while (resources.hasMoreElements()) {
-                var url = resources.nextElement();
+            if (sourceFile.isFile()) {
+                try (java.util.jar.JarFile jar = new java.util.jar.JarFile(sourceFile)) {
+                    var entries = jar.entries();
+                    String prefix = resourcePath + "/";
 
-                if (url.getProtocol().equals("jar")) {
-                    try (var jar = ((java.net.JarURLConnection) url.openConnection()).getJarFile()) {
+                    while (entries.hasMoreElements()) {
+                        var entry = entries.nextElement();
+                        String name = entry.getName();
 
-                        jar.stream()
-                                .filter(e -> e.getName().startsWith(resourcePath + "/"))
-                                .forEach(e -> {
-                                    try {
-                                        String relative = e.getName()
-                                                .substring(resourcePath.length() + 1);
+                        if (name.startsWith(prefix)) {
+                            String relative = name.substring(prefix.length());
+                            if (relative.isEmpty()) continue;
 
-                                        if (relative.isEmpty()) return;
+                            File target = new File(destination, relative);
 
-                                        File target = new File(destination, relative);
+                            if (entry.isDirectory()) {
+                                target.mkdirs();
+                            } else {
+                                target.getParentFile().mkdirs();
 
-                                        if (e.isDirectory()) {
-                                            target.mkdirs();
-                                        } else {
-                                            target.getParentFile().mkdirs();
-
-                                            try (InputStream in = jar.getInputStream(e)) {
-                                                Files.copy(
-                                                        in,
-                                                        target.toPath(),
-                                                        java.nio.file.StandardCopyOption.REPLACE_EXISTING
-                                                );
-                                            }
-                                        }
-                                    } catch (IOException ex) {
-                                        throw new RuntimeException(ex);
-                                    }
-                                });
+                                try (InputStream in = jar.getInputStream(entry)) {
+                                    Files.copy(
+                                            in,
+                                            target.toPath(),
+                                            java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                                    );
+                                }
+                            }
+                        }
                     }
+                    return true;
+                }
+            } else if (sourceFile.isDirectory()) {
+                File sourceDir = new File(sourceFile, resourcePath);
+                if (sourceDir.exists() && sourceDir.isDirectory()) {
+                    try (var stream = Files.walk(sourceDir.toPath())) {
+                        stream.forEach(path -> {
+                            try {
+                                java.nio.file.Path dest = destination.toPath().resolve(sourceDir.toPath().relativize(path).toString());
+                                if (Files.isDirectory(path)) {
+                                    Files.createDirectories(dest);
+                                } else {
+                                    Files.createDirectories(dest.getParent());
+                                    Files.copy(path, dest, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                                }
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        });
+                    }
+                    return true;
                 }
             }
-
         } catch (Exception e) {
             plugin.getLogger().severe(
                     "Impossible d'installer le datapack : " + e.getMessage()
             );
         }
+        return false;
+    }
+
+    private void deleteDirectory(File dir) {
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectory(file);
+                } else {
+                    file.delete();
+                }
+            }
+        }
+        dir.delete();
     }
 }
 

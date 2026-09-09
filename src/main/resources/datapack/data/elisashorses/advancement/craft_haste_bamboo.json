@@ -18,7 +18,7 @@
     "craft": {
       "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "recipe_id": "elisashorses:craft_bamboo"
+        "recipe_id": "elisashorses:haste_bamboo"
       }
     }
   }

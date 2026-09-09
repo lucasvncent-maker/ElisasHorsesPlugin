@@ -33,6 +33,7 @@ import org.bukkit.util.RayTraceResult;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 
 public class HorseItemListener implements Listener {
 
@@ -231,21 +232,30 @@ public class HorseItemListener implements Listener {
         event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
         event.getPlayer().sendMessage(horseResume);
 
+        AttributeInstance jumpAttr = horse.getAttribute(Attribute.JUMP_STRENGTH);
+        if (jumpAttr != null && jumpAttr.getValue() >= 0.7) {
+            this.advancementManager.award(event.getPlayer(), "observe_good_jumper");
+        }
+
         if (ThreadLocalRandom.current().nextDouble() < 0.03) {
             EquipmentSlot hand = event.getHand();
             ItemStack handItem = event.getPlayer().getInventory().getItem(hand);
 
-            if (handItem.getAmount() <= 1) {
-                event.getPlayer().getInventory().setItem(hand, null);
-            } else {
-                handItem.setAmount(handItem.getAmount() - 1); 
-            }
+            if (handItem != null) {
+                Component itemName = (handItem.hasItemMeta() && handItem.getItemMeta().hasDisplayName())
+                        ? handItem.getItemMeta().displayName()
+                        : Component.text("Analyseur Équin");
 
-            event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
-            event.getPlayer().sendMessage(Component.text("Pas de chance, votre ").append(handItem.getItemMeta().displayName()).append(Component.text(" s'est cassé...")));
-            
-            if (horse.getAttribute(Attribute.JUMP_STRENGTH).getValue() >= 0.7) {
-                this.advancementManager.award(event.getPlayer(), "observe_good_jumper");
+                if (handItem.getAmount() <= 1) {
+                    event.getPlayer().getInventory().setItem(hand, null);
+                } else {
+                    handItem.setAmount(handItem.getAmount() - 1); 
+                }
+
+                event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
+                event.getPlayer().sendMessage(Component.text("Pas de chance, votre ")
+                        .append(itemName != null ? itemName : Component.text("Analyseur"))
+                        .append(Component.text(" s'est cassé...")));
             }
         }  
     }

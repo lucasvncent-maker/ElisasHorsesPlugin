@@ -60,7 +60,7 @@ public class MyPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HorseRaceListener(this), this);
 
 
-        getLogger().info("MyPlugin est activé !");
+        getLogger().info("ElisasHorses est activé !");
 
         Bukkit.getScheduler().runTaskTimer(
             this,
@@ -91,15 +91,15 @@ public class MyPlugin extends JavaPlugin {
             getLogger().info("Monde horse_races chargé !");
         }
 
-        // Bukkit.getScheduler().runTaskLater(this, () -> {
-        //     NamespacedKey key = new NamespacedKey(this, "root");
-        //     Advancement adv = Bukkit.getAdvancement(key);
-        //     if (adv != null) {
-        //         getLogger().info("🚀 Succès ! myplugin:root est enfin reconnu.");
-        //     } else {
-        //         getLogger().severe("❌ Échec : Toujours introuvable malgré le reload.");
-        //     }
-        // }, 60L);
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            NamespacedKey key = new NamespacedKey(this, "root");
+            Advancement adv = Bukkit.getAdvancement(key);
+            if (adv != null) {
+                getLogger().info("🚀 Succès ! elisashorses:root est reconnu.");
+            } else {
+                getLogger().warning("❌ Toujours introuvable malgré le reload.");
+            }
+        }, 20L);
     }
 
     public HorseManager getHorseManager() {
