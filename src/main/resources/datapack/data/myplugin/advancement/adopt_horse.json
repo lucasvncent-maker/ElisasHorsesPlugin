@@ -1,5 +1,5 @@
 {
-  "parent": "myplugin:root",
+  "parent": "elisashorses:root",
   "display": {
     "icon": {
       "id": "minecraft:saddle"
@@ -19,7 +19,7 @@
       "trigger": "minecraft:tame_animal",
       "conditions": {
         "entity": {
-          "type": "minecraft:horse"
+          "minecraft:entity_type": "minecraft:horse"
         }
       }
     }

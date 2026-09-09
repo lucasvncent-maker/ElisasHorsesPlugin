@@ -114,7 +114,7 @@ public class HorseItemListener implements Listener {
         player.sendMessage("Félicitations !");
         this.advancementManager.discoverRecipe(player, "horse_analyzer");
     }
-
+ 
     @EventHandler
     public void onCraftItem(CraftItemEvent event) {
 

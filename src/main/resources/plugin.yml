@@ -1,7 +1,7 @@
-name: MyPlugin
+name: ElisasHorses
 version: 1.0.0
 main: fr.loual.myplugin.MyPlugin
-api-version: '1.21.6'
+api-version: '26.2'
 
 
 commands:

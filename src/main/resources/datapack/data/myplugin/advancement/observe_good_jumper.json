@@ -1,5 +1,5 @@
 {
-  "parent": "myplugin:craft_haste_bamboo",
+  "parent": "elisashorses:craft_haste_bamboo",
   "display": {
     "icon": {
       "id": "minecraft:leather_horse_armor"

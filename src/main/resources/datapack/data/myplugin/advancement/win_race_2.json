@@ -1,5 +1,5 @@
 {
-  "parent": "myplugin:participate_to_race",
+  "parent": "elisashorses:participate_to_race",
   "display": {
     "icon": {
       "id": "minecraft:paper"

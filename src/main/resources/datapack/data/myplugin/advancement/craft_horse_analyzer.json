@@ -1,5 +1,5 @@
 {
-  "parent": "myplugin:adopt_horse",
+  "parent": "elisashorses:adopt_horse",
   "display": {
     "icon": {
       "id": "minecraft:spyglass"
@@ -18,7 +18,7 @@
     "craft": {
       "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "recipe_id": "myplugin:horse_analyzer"
+        "recipe_id": "elisashorses:horse_analyzer"
       }
     }
   }

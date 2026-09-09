@@ -1,5 +1,5 @@
 {
-  "parent": "myplugin:craft_vigor_apple",
+  "parent": "elisashorses:craft_vigor_apple",
   "display": {
     "icon": {
       "id": "minecraft:bamboo"
@@ -18,7 +18,7 @@
     "craft": {
       "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "recipe_id": "myplugin:craft_bamboo"
+        "recipe_id": "elisashorses:craft_bamboo"
       }
     }
   }

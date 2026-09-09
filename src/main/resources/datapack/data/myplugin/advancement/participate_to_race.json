@@ -1,5 +1,5 @@
 {
-  "parent": "myplugin:craft_vigor_apple",
+  "parent": "elisashorses:craft_vigor_apple",
   "display": {
     "icon": {
       "id": "minecraft:paper"
