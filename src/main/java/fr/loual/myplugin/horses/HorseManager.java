@@ -48,7 +48,7 @@ public class HorseManager {
         if (healthAttribute == null) { return; }
 
         double healthLevel = horseData.getHealthLevel();
-        double bonusHealth = 1.0 + (2 * healthLevel);
+        double bonusHealth = 2.0 * healthLevel;
         double baseHealth = horseData.getBaseHealth();
         double newHealth = baseHealth + bonusHealth;
         healthAttribute.setBaseValue(newHealth);

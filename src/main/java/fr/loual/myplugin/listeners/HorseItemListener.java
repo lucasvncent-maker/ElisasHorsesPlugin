@@ -34,6 +34,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.GameMode;
+import org.bukkit.Particle;
+import org.bukkit.event.EventPriority;
 
 public class HorseItemListener implements Listener {
 
@@ -63,25 +66,46 @@ public class HorseItemListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 
         if (!(event.getRightClicked() instanceof Horse horse)) {
             return;
         }
 
-        ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
+        Player player = event.getPlayer();
+        EquipmentSlot hand = event.getHand();
+        ItemStack item = (hand == EquipmentSlot.HAND)
+                ? player.getInventory().getItemInMainHand()
+                : player.getInventory().getItemInOffHand();
 
-        if (VigorApple.isVigorApple(plugin, item)) {
-            onVigorApple(plugin, horse, event, item);
+        if (item == null || item.isEmpty()) {
+            return;
         }
 
-        if (HasteBamboo.isHasteBamboo(plugin, item)) {
-            onHasteBamboo(plugin, horse, event, item);
+        boolean isVigor = VigorApple.isVigorApple(plugin, item);
+        boolean isHaste = HasteBamboo.isHasteBamboo(plugin, item);
+        boolean isHealthy = HealthyGrass.isHealthyGrass(plugin, item);
+        boolean isAnalyzer = HorseAnalyzer.isHorseAnalyzer(plugin, item);
+
+        if (!isVigor && !isHaste && !isHealthy && !isAnalyzer) {
+            return;
         }
 
-        if (HealthyGrass.isHealthyGrass(plugin, item)) {
-            onHealthyGrass(plugin, horse, event, item);
+        event.setCancelled(true);
+
+        if (event instanceof org.bukkit.event.player.PlayerInteractAtEntityEvent) {
+            return;
+        }
+
+        if (isVigor) {
+            onVigorApple(plugin, horse, player, item);
+        } else if (isHaste) {
+            onHasteBamboo(plugin, horse, player, item);
+        } else if (isHealthy) {
+            onHealthyGrass(plugin, horse, player, item);
+        } else if (isAnalyzer) {
+            onHorseFound(plugin, horse, player, hand);
         }
     }
 
@@ -143,60 +167,83 @@ public class HorseItemListener implements Listener {
     }
 
     public void onRacePass(MyPlugin plugin, ItemStack item, Player player, PlayerInteractEvent event) {
+        event.setCancelled(true);
         int raceId = RacePass.getRaceId(plugin, item);
         boolean raceStarted = plugin.getHorseRaceManager().startRace(player, raceId);
-        event.setCancelled(true);
         if (raceStarted) {
             this.advancementManager.award(player, "participate_to_race");
-            item.setAmount(item.getAmount() - 1);
+            if (player.getGameMode() != GameMode.CREATIVE) {
+                item.subtract(1);
+            }
         }
     }
 
-    public void onHasteBamboo(MyPlugin plugin, Horse horse, PlayerInteractEntityEvent event, ItemStack item) {
+    public void onHasteBamboo(MyPlugin plugin, Horse horse, Player player, ItemStack item) {
         HorseData data = plugin.getHorseManager().getData(horse);
 
-        item.setAmount(item.getAmount() - 1);
-        if (data.getSpeedLevel() == data.MAX_SPEED_LEVEL) {
-            event.getPlayer().sendMessage("§6Votre cheval a déjà atteint le niveau de vitesse maximal !");
+        if (data.getSpeedLevel() >= HorseData.MAX_SPEED_LEVEL) {
+            player.sendMessage("§cVotre cheval a déjà atteint le niveau de vitesse maximal !");
             return;
         }
-        
+
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            item.subtract(1);
+        }
+
         data.addSpeedLevel(1);
         plugin.getHorseManager().applyStats(horse);
 
-        event.getPlayer().sendMessage("§6Votre cheval a gagné +1 niveau de vitesse !");
-        event.setCancelled(true);
+        horse.getWorld().spawnParticle(Particle.HEART, horse.getLocation().add(0, 1.2, 0), 7, 0.3, 0.3, 0.3, 0.1);
+        horse.getWorld().playSound(horse.getLocation(), Sound.ENTITY_HORSE_EAT, 1.0f, 1.0f);
+
+        player.sendMessage("§6Votre cheval a gagné +1 niveau de vitesse ! (§e" + (int) data.getSpeedLevel() + "§6/§e9§6)");
     }
 
-    public void onHealthyGrass(MyPlugin plugin, Horse horse, PlayerInteractEntityEvent event, ItemStack item) {
+    public void onHealthyGrass(MyPlugin plugin, Horse horse, Player player, ItemStack item) {
         HorseData data = plugin.getHorseManager().getData(horse);
 
-        item.setAmount(item.getAmount() - 1);
-        if (data.getHealthLevel() == data.MAX_HEALTH_LEVEL) {
-            event.getPlayer().sendMessage("§6Votre cheval a déjà atteint le niveau de santé maximal !");
+        if (data.getHealthLevel() >= HorseData.MAX_HEALTH_LEVEL) {
+            player.sendMessage("§cVotre cheval a déjà atteint le niveau de santé maximal !");
             return;
         }
-        
+
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            item.subtract(1);
+        }
+
         data.addHealthLevel(1);
         plugin.getHorseManager().applyStats(horse);
 
-        event.getPlayer().sendMessage("§6Votre cheval a gagné +1 niveau de santé !");
-        event.setCancelled(true);
+        AttributeInstance healthAttribute = horse.getAttribute(Attribute.MAX_HEALTH);
+        if (healthAttribute != null) {
+            horse.setHealth(Math.min(horse.getHealth() + 2.0, healthAttribute.getValue()));
+        }
+
+        horse.getWorld().spawnParticle(Particle.HEART, horse.getLocation().add(0, 1.2, 0), 7, 0.3, 0.3, 0.3, 0.1);
+        horse.getWorld().playSound(horse.getLocation(), Sound.ENTITY_HORSE_EAT, 1.0f, 1.0f);
+
+        player.sendMessage("§6Votre cheval a gagné +1 niveau de santé ! (§e" + (int) data.getHealthLevel() + "§6/§e9§6)");
     }
 
-    public void onVigorApple(MyPlugin plugin, Horse horse, PlayerInteractEntityEvent event, ItemStack item) {
+    public void onVigorApple(MyPlugin plugin, Horse horse, Player player, ItemStack item) {
         HorseData data = plugin.getHorseManager().getData(horse);
 
-        item.setAmount(item.getAmount() - 1);
-        if (data.getJumpLevel() == data.MAX_JUMP_LEVEL) {
-            event.getPlayer().sendMessage("§6Votre cheval a déjà atteint le niveau de saut maximal !");
+        if (data.getJumpLevel() >= HorseData.MAX_JUMP_LEVEL) {
+            player.sendMessage("§cVotre cheval a déjà atteint le niveau de saut maximal !");
             return;
         }
-        
+
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            item.subtract(1);
+        }
+
         data.addJumpLevel(1);
         plugin.getHorseManager().applyStats(horse);
 
-        event.getPlayer().sendMessage("§6Votre cheval a gagné +1 niveau de saut !");
+        horse.getWorld().spawnParticle(Particle.HEART, horse.getLocation().add(0, 1.2, 0), 7, 0.3, 0.3, 0.3, 0.1);
+        horse.getWorld().playSound(horse.getLocation(), Sound.ENTITY_HORSE_EAT, 1.0f, 1.0f);
+
+        player.sendMessage("§6Votre cheval a gagné +1 niveau de saut ! (§e" + (int) data.getJumpLevel() + "§6/§e9§6)");
     }
 
     public void onHorseAnalyzer(MyPlugin plugin, PlayerInteractEvent event, ItemStack item) {
@@ -217,43 +264,34 @@ public class HorseItemListener implements Listener {
                 return;
             }
             
-            Horse observedHorse = (Horse) result.getHitEntity();
-            onHorseFound(plugin, observedHorse, event, item);
-
-    
-
+            onHorseFound(plugin, horse, player, event.getHand());
         }, 1L);
     }
 
-    public void onHorseFound(MyPlugin plugin, Horse horse, PlayerInteractEvent event, ItemStack item) {
+    public void onHorseFound(MyPlugin plugin, Horse horse, Player player, EquipmentSlot hand) {
         HorseData data = plugin.getHorseManager().getData(horse);
         Component horseResume = data.getResume();
 
-        event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
-        event.getPlayer().sendMessage(horseResume);
+        player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
+        player.sendMessage(horseResume);
 
         AttributeInstance jumpAttr = horse.getAttribute(Attribute.JUMP_STRENGTH);
         if (jumpAttr != null && jumpAttr.getValue() >= 0.7) {
-            this.advancementManager.award(event.getPlayer(), "observe_good_jumper");
+            this.advancementManager.award(player, "observe_good_jumper");
         }
 
         if (ThreadLocalRandom.current().nextDouble() < 0.03) {
-            EquipmentSlot hand = event.getHand();
-            ItemStack handItem = event.getPlayer().getInventory().getItem(hand);
+            ItemStack handItem = (hand != null) ? player.getInventory().getItem(hand) : player.getInventory().getItemInMainHand();
 
-            if (handItem != null) {
+            if (handItem != null && !handItem.isEmpty()) {
                 Component itemName = (handItem.hasItemMeta() && handItem.getItemMeta().hasDisplayName())
                         ? handItem.getItemMeta().displayName()
                         : Component.text("Analyseur Équin");
 
-                if (handItem.getAmount() <= 1) {
-                    event.getPlayer().getInventory().setItem(hand, null);
-                } else {
-                    handItem.setAmount(handItem.getAmount() - 1); 
-                }
+                handItem.subtract(1);
 
-                event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
-                event.getPlayer().sendMessage(Component.text("Pas de chance, votre ")
+                player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
+                player.sendMessage(Component.text("Pas de chance, votre ")
                         .append(itemName != null ? itemName : Component.text("Analyseur"))
                         .append(Component.text(" s'est cassé...")));
             }

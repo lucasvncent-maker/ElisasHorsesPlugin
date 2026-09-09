@@ -52,10 +52,18 @@ public class VigorApple {
         }
 
         NamespacedKey key = new NamespacedKey(plugin, ITEM_ID);
+        NamespacedKey legacyKey = new NamespacedKey("myplugin", ITEM_ID);
 
-        return meta.getPersistentDataContainer().has(
-                key,
-                PersistentDataType.BYTE
-        );
+        if (meta.getPersistentDataContainer().has(key, PersistentDataType.BYTE)
+                || meta.getPersistentDataContainer().has(legacyKey, PersistentDataType.BYTE)) {
+            return true;
+        }
+
+        if (meta.hasDisplayName()) {
+            String plain = net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText().serialize(meta.displayName());
+            return plain.equalsIgnoreCase(displayName);
+        }
+
+        return false;
     }
 }

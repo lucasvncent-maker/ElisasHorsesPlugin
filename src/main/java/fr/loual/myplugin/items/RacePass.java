@@ -49,8 +49,17 @@ public class RacePass {
         }
 
         NamespacedKey key = new NamespacedKey(plugin, ITEM_ID);
+        NamespacedKey legacyKey = new NamespacedKey("myplugin", ITEM_ID);
 
-        return meta.getPersistentDataContainer().has(key, PersistentDataType.BYTE);
+        if (meta.getPersistentDataContainer().has(key, PersistentDataType.BYTE)
+                || meta.getPersistentDataContainer().has(legacyKey, PersistentDataType.BYTE)) {
+            return true;
+        }
+
+        NamespacedKey raceKey = new NamespacedKey(plugin, "race_id");
+        NamespacedKey legacyRaceKey = new NamespacedKey("myplugin", "race_id");
+        return meta.getPersistentDataContainer().has(raceKey, PersistentDataType.INTEGER)
+                || meta.getPersistentDataContainer().has(legacyRaceKey, PersistentDataType.INTEGER);
     }
 
     public static int getRaceId(MyPlugin plugin, ItemStack item) {
@@ -59,9 +68,15 @@ public class RacePass {
         }
 
         ItemMeta meta = item.getItemMeta();
+        if (meta == null) return -1;
 
         NamespacedKey raceKey = new NamespacedKey(plugin, "race_id");
         Integer raceId = meta.getPersistentDataContainer().get(raceKey, PersistentDataType.INTEGER);
+
+        if (raceId == null) {
+            NamespacedKey legacyRaceKey = new NamespacedKey("myplugin", "race_id");
+            raceId = meta.getPersistentDataContainer().get(legacyRaceKey, PersistentDataType.INTEGER);
+        }
 
         if (raceId == null) {
             return -1;
