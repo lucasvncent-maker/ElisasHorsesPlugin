@@ -1,5 +1,6 @@
 package fr.loual.myplugin.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,8 +16,11 @@ public class Coords implements CommandExecutor {
             String label,
             String[] args
     ) {
+        // Vérifie que la commande est exécutée par un joueur
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("Cette commande doit être exécutée par un joueur.");
+            sender.sendMessage(
+                    ChatColor.RED + "Cette commande doit être exécutée par un joueur."
+            );
             return true;
         }
 
@@ -26,11 +30,29 @@ public class Coords implements CommandExecutor {
         int y = location.getBlockY();
         int z = location.getBlockZ();
 
-        player.sendMessage(
-                player.getName()
-                        + " se trouve aux coordonnées "
-                        + x + " " + y + " " + z + " !"
-        );
+        // Argument optionnel
+        String messageSupplementaire = "";
+
+        if (args.length > 0) {
+            messageSupplementaire = " " + String.join(" ", args);
+        }
+
+        // Message envoyé à tout le serveur
+        String message =
+                ChatColor.YELLOW + player.getName()
+                + ChatColor.WHITE + " se trouve aux coordonnées "
+                + ChatColor.RED + "X: " + x
+                + ChatColor.WHITE + " "
+                + ChatColor.GREEN + "Y: " + y
+                + ChatColor.WHITE + " "
+                + ChatColor.BLUE + "Z: " + z
+                + ChatColor.WHITE + " !"
+                + ChatColor.GRAY + messageSupplementaire;
+
+        // Envoie le message à tous les joueurs connectés
+        for (Player onlinePlayer : player.getServer().getOnlinePlayers()) {
+            onlinePlayer.sendMessage(message);
+        }
 
         return true;
     }
