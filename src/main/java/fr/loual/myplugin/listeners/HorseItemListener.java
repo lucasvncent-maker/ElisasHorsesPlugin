@@ -159,6 +159,12 @@ public class HorseItemListener implements Listener {
     }
 
     @EventHandler
+    public void onPlayerJoin(org.bukkit.event.player.PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        this.advancementManager.discoverRecipe(player, "horse_analyzer");
+    }
+
+    @EventHandler
     public void onHorseTame(EntityTameEvent event) {
         if (!(event.getEntity() instanceof Horse)) {
             return;
@@ -180,20 +186,23 @@ public class HorseItemListener implements Listener {
             return;
         }
 
-        if (event.getRecipe().getResult().isSimilar(VigorApple.create(plugin))) {
+        ItemStack res = (event.getRecipe() != null) ? event.getRecipe().getResult() : null;
+        if (res == null) return;
+
+        if (VigorApple.isVigorApple(plugin, res) || res.isSimilar(VigorApple.create(plugin))) {
             this.advancementManager.award(player, "craft_vigor_apple");
             this.advancementManager.discoverRecipe(player, "haste_bamboo");
             return;
         }
 
-        if (event.getRecipe().getResult().isSimilar(HorseAnalyzer.create(plugin))) {
+        if (HorseAnalyzer.isHorseAnalyzer(plugin, res) || res.isSimilar(HorseAnalyzer.create(plugin))) {
             this.advancementManager.award(player, "craft_horse_analyzer");
             this.advancementManager.discoverRecipe(player, "vigor_apple");
             this.advancementManager.discoverRecipe(player, "race_pass");
             return;
         }
 
-        if (event.getRecipe().getResult().isSimilar(HasteBamboo.create(plugin))) {
+        if (HasteBamboo.isHasteBamboo(plugin, res) || res.isSimilar(HasteBamboo.create(plugin))) {
             this.advancementManager.award(player, "craft_haste_bamboo");
             return;
         }

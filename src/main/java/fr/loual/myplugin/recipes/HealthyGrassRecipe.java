@@ -27,6 +27,10 @@ public class HealthyGrassRecipe {
         recipe.setIngredient('G', Material.GLOWSTONE_DUST);
         recipe.setIngredient('H', Material.SHORT_GRASS);
 
+        try {
+            Bukkit.removeRecipe(key);
+        } catch (Exception ignored) {}
+
         Bukkit.addRecipe(recipe);
     }
 }

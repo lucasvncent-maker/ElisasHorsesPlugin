@@ -59,6 +59,9 @@ public class MyPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HorseItemListener(this), this);
         getServer().getPluginManager().registerEvents(new HorseRaceListener(this), this);
 
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.discoverRecipe(new NamespacedKey(this, "horse_analyzer"));
+        }
 
         getLogger().info("ElisasHorses est activé !");
 

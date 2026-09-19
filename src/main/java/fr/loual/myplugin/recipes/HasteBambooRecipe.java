@@ -28,6 +28,10 @@ public class HasteBambooRecipe {
         recipe.setIngredient('A', Material.AMETHYST_SHARD);
         recipe.setIngredient('B', Material.BAMBOO);
 
+        try {
+            Bukkit.removeRecipe(key);
+        } catch (Exception ignored) {}
+
         Bukkit.addRecipe(recipe);
     }
 }

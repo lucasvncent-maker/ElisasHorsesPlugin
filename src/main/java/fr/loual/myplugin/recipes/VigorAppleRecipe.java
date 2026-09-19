@@ -27,6 +27,10 @@ public class VigorAppleRecipe {
         recipe.setIngredient('G', Material.GOLD_INGOT);
         recipe.setIngredient('A', Material.APPLE);
 
+        try {
+            Bukkit.removeRecipe(key);
+        } catch (Exception ignored) {}
+
         Bukkit.addRecipe(recipe);
     }
 }

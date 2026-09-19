@@ -8,6 +8,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import org.bukkit.inventory.RecipeChoice;
+
 public class HorseAnalyzerRecipe {
 
     public static void register(JavaPlugin plugin) {
@@ -26,6 +28,10 @@ public class HorseAnalyzerRecipe {
         recipe.setIngredient('H', Material.HAY_BLOCK);
         recipe.setIngredient('S', Material.SPYGLASS);
         recipe.setIngredient('A', Material.APPLE);
+
+        try {
+            Bukkit.removeRecipe(key);
+        } catch (Exception ignored) {}
 
         Bukkit.addRecipe(recipe);
     }

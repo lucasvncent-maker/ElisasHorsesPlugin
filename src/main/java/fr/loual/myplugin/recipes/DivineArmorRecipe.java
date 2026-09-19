@@ -29,6 +29,10 @@ public class DivineArmorRecipe {
         recipe.setIngredient('U', Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
         recipe.setIngredient('D', Material.DIAMOND);
 
+        try {
+            Bukkit.removeRecipe(key);
+        } catch (Exception ignored) {}
+
         Bukkit.addRecipe(recipe);
     }
 }

@@ -25,6 +25,10 @@ public class RacePassRecipe {
         recipe.setIngredient('P', Material.PAPER);
         recipe.setIngredient('A', Material.APPLE);
 
+        try {
+            Bukkit.removeRecipe(key);
+        } catch (Exception ignored) {}
+
         Bukkit.addRecipe(recipe);
     }
 }
