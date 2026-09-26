@@ -15,6 +15,7 @@ import fr.loual.myplugin.races.HorseRaceManager;
 
 import fr.loual.myplugin.listeners.HorseItemListener;
 import fr.loual.myplugin.listeners.HorseRaceListener;
+import fr.loual.myplugin.listeners.HorseCareListener;
 
 import org.bukkit.World;
 import org.bukkit.entity.Horse;
@@ -53,6 +54,7 @@ public class MyPlugin extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new HorseItemListener(this), this);
         getServer().getPluginManager().registerEvents(new HorseRaceListener(this), this);
+        getServer().getPluginManager().registerEvents(new HorseCareListener(this), this);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             this.horseRecipeManager.discoverAll(p);
@@ -72,9 +74,11 @@ public class MyPlugin extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimer(
             this,
             () -> {
+                long currentTick = Bukkit.getCurrentTick();
                 for (World world : getServer().getWorlds()) {
                     for (Horse horse : world.getEntitiesByClass(Horse.class)) {
                         horseManager.tickFlyingHorse(this, horse);
+                        horseManager.tickCareAndComfort(this, horse, currentTick);
                     }
                 }
             },

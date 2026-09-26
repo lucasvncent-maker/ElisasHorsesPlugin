@@ -1,12 +1,7 @@
 package fr.loual.myplugin.recipes;
 
 import fr.loual.myplugin.MyPlugin;
-import fr.loual.myplugin.items.DivineArmor;
-import fr.loual.myplugin.items.HasteBamboo;
-import fr.loual.myplugin.items.HealthyGrass;
-import fr.loual.myplugin.items.HorseAnalyzer;
-import fr.loual.myplugin.items.RacePass;
-import fr.loual.myplugin.items.VigorApple;
+import fr.loual.myplugin.items.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -33,6 +28,14 @@ public class HorseRecipeManager implements Listener {
     public final NamespacedKey divineArmorKey;
     public final NamespacedKey racePassKey;
 
+    // Nouvelles recettes pour soins, lien et équipement
+    public final NamespacedKey groomingBrushKey;
+    public final NamespacedKey horseWhistleKey;
+    public final NamespacedKey saddlebagKey;
+    public final NamespacedKey horseshoeWinterKey;
+    public final NamespacedKey horseshoeFeatherKey;
+    public final NamespacedKey horseshoeRockKey;
+
     public HorseRecipeManager(MyPlugin plugin) {
         this.plugin = plugin;
         this.horseAnalyzerKey = new NamespacedKey(plugin, "horse_analyzer");
@@ -42,12 +45,26 @@ public class HorseRecipeManager implements Listener {
         this.divineArmorKey = new NamespacedKey(plugin, "divine_armor");
         this.racePassKey = new NamespacedKey(plugin, "race_pass");
 
+        this.groomingBrushKey = new NamespacedKey(plugin, "grooming_brush");
+        this.horseWhistleKey = new NamespacedKey(plugin, "horse_whistle");
+        this.saddlebagKey = new NamespacedKey(plugin, "saddlebag");
+        this.horseshoeWinterKey = new NamespacedKey(plugin, "horseshoe_winter");
+        this.horseshoeFeatherKey = new NamespacedKey(plugin, "horseshoe_feather");
+        this.horseshoeRockKey = new NamespacedKey(plugin, "horseshoe_rock");
+
         recipeKeys.add(horseAnalyzerKey);
         recipeKeys.add(vigorAppleKey);
         recipeKeys.add(hasteBambooKey);
         recipeKeys.add(healthyGrassKey);
         recipeKeys.add(divineArmorKey);
         recipeKeys.add(racePassKey);
+
+        recipeKeys.add(groomingBrushKey);
+        recipeKeys.add(horseWhistleKey);
+        recipeKeys.add(saddlebagKey);
+        recipeKeys.add(horseshoeWinterKey);
+        recipeKeys.add(horseshoeFeatherKey);
+        recipeKeys.add(horseshoeRockKey);
     }
 
     public void registerRecipes() {
@@ -103,6 +120,50 @@ public class HorseRecipeManager implements Listener {
         racePass.setIngredient('P', Material.PAPER);
         racePass.setIngredient('A', Material.APPLE);
         if (registerOrReplace(racePass)) registered++;
+
+        // 7. Brosse de Pansage
+        ShapedRecipe groomingBrush = new ShapedRecipe(groomingBrushKey, GroomingBrush.create(plugin));
+        groomingBrush.shape(" F ", " C ", " W ");
+        groomingBrush.setIngredient('F', Material.FEATHER);
+        groomingBrush.setIngredient('C', Material.COPPER_INGOT);
+        groomingBrush.setIngredient('W', Material.WHITE_WOOL);
+        if (registerOrReplace(groomingBrush)) registered++;
+
+        // 8. Sifflet Équin
+        ShapedRecipe horseWhistle = new ShapedRecipe(horseWhistleKey, HorseWhistle.create(plugin));
+        horseWhistle.shape(" I ", " G ", " C ");
+        horseWhistle.setIngredient('I', Material.IRON_INGOT);
+        horseWhistle.setIngredient('G', Material.GOLD_INGOT);
+        horseWhistle.setIngredient('C', Material.COPPER_INGOT);
+        if (registerOrReplace(horseWhistle)) registered++;
+
+        // 9. Sacoche de Selle
+        ShapedRecipe saddlebag = new ShapedRecipe(saddlebagKey, SaddlebagItem.create(plugin));
+        saddlebag.shape("LLL", "LCL", "LLL");
+        saddlebag.setIngredient('L', Material.LEATHER);
+        saddlebag.setIngredient('C', Material.CHEST);
+        if (registerOrReplace(saddlebag)) registered++;
+
+        // 10. Fers d'Hiver
+        ShapedRecipe horseshoeWinter = new ShapedRecipe(horseshoeWinterKey, HorseshoeItem.create(plugin, HorseshoeItem.Type.WINTER));
+        horseshoeWinter.shape("I I", " A ", "I I");
+        horseshoeWinter.setIngredient('I', Material.IRON_INGOT);
+        horseshoeWinter.setIngredient('A', Material.AMETHYST_SHARD);
+        if (registerOrReplace(horseshoeWinter)) registered++;
+
+        // 11. Fers Légers
+        ShapedRecipe horseshoeFeather = new ShapedRecipe(horseshoeFeatherKey, HorseshoeItem.create(plugin, HorseshoeItem.Type.FEATHER));
+        horseshoeFeather.shape("G G", " F ", "G G");
+        horseshoeFeather.setIngredient('G', Material.GOLD_INGOT);
+        horseshoeFeather.setIngredient('F', Material.FEATHER);
+        if (registerOrReplace(horseshoeFeather)) registered++;
+
+        // 12. Fers de Roche
+        ShapedRecipe horseshoeRock = new ShapedRecipe(horseshoeRockKey, HorseshoeItem.create(plugin, HorseshoeItem.Type.ROCK));
+        horseshoeRock.shape("C C", " S ", "C C");
+        horseshoeRock.setIngredient('C', Material.COPPER_INGOT);
+        horseshoeRock.setIngredient('S', Material.SMOOTH_STONE);
+        if (registerOrReplace(horseshoeRock)) registered++;
 
         plugin.getLogger().info("Recettes personnalisées enregistrées : " + registered + "/" + recipeKeys.size());
     }

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elisa's Horses — Guide & Nouveautés</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0c0f14;
+            --bg-card: rgba(22, 27, 34, 0.75);
+            --bg-card-hover: rgba(30, 38, 48, 0.9);
+            --border: rgba(212, 175, 55, 0.2);
+            --border-hover: rgba(212, 175, 55, 0.5);
+            --gold: #f5c842;
+            --gold-light: #fef3c7;
+            --gold-dark: #b48608;
+            --emerald: #10b981;
+            --cyan: #06b6d4;
+            --rose: #f43f5e;
+            --purple: #a855f7;
+            --text-main: #e6edf3;
+            --text-muted: #8b949e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.07) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        header {
+            position: relative;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(20, 24, 33, 0.8) 0%, transparent 100%);
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: rgba(245, 200, 66, 0.15);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.2rem;
+            color: #fff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(245, 200, 66, 0.3);
+            margin-bottom: 0.75rem;
+        }
+
+        h1 span {
+            background: linear-gradient(135deg, #ffe082 0%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--gold-light);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .icon-gold { color: var(--gold); border-color: rgba(245, 200, 66, 0.3); background: rgba(245, 200, 66, 0.1); }
+        .icon-emerald { color: var(--emerald); border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.1); }
+        .icon-cyan { color: var(--cyan); border-color: rgba(6, 182, 212, 0.3); background: rgba(6, 182, 212, 0.1); }
+        .icon-rose { color: var(--rose); border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.1); }
+        .icon-purple { color: var(--purple); border-color: rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.1); }
+
+        .card h3 {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: #b3bac2;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .perks {
+            list-style: none;
+            margin-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 1rem;
+        }
+
+        .perks li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .perks li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-size: 0.85rem;
+        }
+
+        /* Timeline / Palier */
+        .tier-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .tier-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.25rem 1.75rem;
+            display: grid;
+            grid-template-columns: 90px 180px 1fr;
+            align-items: center;
+            gap: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.25s ease;
+        }
+
+        .tier-item:hover {
+            border-color: var(--gold);
+            background: var(--bg-card-hover);
+        }
+
+        .tier-badge {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-align: center;
+            background: rgba(245, 200, 66, 0.12);
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            border: 1px solid rgba(245, 200, 66, 0.25);
+        }
+
+        .tier-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #fff;
+        }
+
+        .tier-desc {
+            color: #b3bac2;
+            font-size: 0.95rem;
+        }
+
+        /* Crafting Table Grid Simulation */
+        .craft-card {
+            background: rgba(18, 22, 28, 0.85);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .craft-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .craft-header h4 {
+            font-size: 1.15rem;
+            color: var(--gold-light);
+        }
+
+        .craft-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 48px);
+            grid-template-rows: repeat(3, 48px);
+            gap: 4px;
+            background: #2b2b2b;
+            padding: 8px;
+            border-radius: 8px;
+            width: fit-content;
+            margin: 0.5rem auto 1rem;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.6);
+        }
+
+        .craft-slot {
+            background: #8b8b8b;
+            border: 2px solid;
+            border-color: #373737 #fff #fff #373737;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #111;
+            text-align: center;
+        }
+
+        .craft-slot.filled {
+            background: #8fa3b0;
+            color: #fff;
+            text-shadow: 1px 1px 0 #000;
+            font-size: 0.65rem;
+            padding: 2px;
+            line-height: 1.1;
+        }
+
+        .command-box {
+            background: #11151c;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            font-family: monospace;
+            color: var(--gold);
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .command-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.3rem; }
+            .tier-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                text-align: left;
+            }
+            .tier-badge { width: fit-content; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="version-badge">ElisasHorses v1.1.0</div>
+        <h1>L'ART DU <span>CHEVALIER</span></h1>
+        <p class="subtitle">
+            Système d'amitié & affection, toilettage complet, attribution exclusive par étiquette, fers forgés et sacoche de voyage.
+        </p>
+    </header>
+
+    <div class="container">
+
+        <!-- SECTION 1: PROPRIÉTAIRE UNIQUE & NAME TAG -->
+        <h2 class="section-title">🏷️ Attribution & Propriétaire Unique</h2>
+        <p class="section-desc">Votre monture est liée pour toujours à celui qui lui donne son identité.</p>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon icon-gold">👑</div>
+                <h3>Liaison par l'Étiquette (Name Tag)</h3>
+                <p>Appliquer une étiquette personnalisée à un cheval fait de vous son <strong>unique propriétaire</strong>.</p>
+                <ul class="perks">
+                    <li>Sauvegarde définitive dans le PersistentDataContainer (PDC).</li>
+                    <li>Sons triomphaux et cœurs dorés lors de l'attribution.</li>
+                    <li>Affichage clair du propriétaire dans l'Analyseur Équin.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-icon icon-rose">🛡️</div>
+                <h3>Protection Anti-Vol Totale</h3>
+                <p>Un cheval déjà nommé est entièrement protégé contre l'appropriation par d'autres cavaliers.</p>
+                <ul class="perks">
+                    <li>Tentative de renommage par un tiers bloquée avec message d'alerte.</li>
+                    <li>Seul le propriétaire peut brosser, caresser et faire progresser l'affection.</li>
+                    <li>Les friandises de boost de stats (Vigueur, Célérité, Saut) sont réservées au maître.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECTION 2: LIEN D'AMITIÉ & PALIERS D'AFFECTION -->
+        <h2 class="section-title">💖 Lien & Paliers d'Affection (0 à 100)</h2>
+        <p class="section-desc">Passez du temps avec votre monture pour débloquer des synergies uniques et magiques.</p>
+
+        <div class="tier-list">
+            <div class="tier-item">
+                <div class="tier-badge">Niv. 1 (25)</div>
+                <div class="tier-name">Confiance Sereine</div>
+                <div class="tier-desc">Le cheval ne panique plus devant les bruits et ne désarçonne jamais son maître sous le coup de la douleur.</div>
+            </div>
+
+            <div class="tier-item">
+                <div class="tier-badge">Niv. 2 (50)</div>
+                <div class="tier-name">Appel au Sifflet</div>
+                <div class="tier-desc">Votre monture entend le son du <strong>Sifflet équin</strong> : elle accourt au galop ou se téléporte à vos côtés jusqu'à 60 blocs de distance.</div>
+            </div>
+
+            <div class="tier-item">
+                <div class="tier-badge">Niv. 3 (75)</div>
+                <div class="tier-name">Lien Vital</div>
+                <div class="tier-desc">Harmonie totale : en selle, vous et votre cheval profitez d'une régénération passive continue partagée (1 PV / 5s).</div>
+            </div>
+
+            <div class="tier-item">
+                <div class="tier-badge">Niv. 4 (100)</div>
+                <div class="tier-name">Fidélité Protectrice</div>
+                <div class="tier-desc">Si vous êtes pris pour cible à pied par des monstres, votre cheval charge et repousse violemment l'agresseur d'un coup de sabot (6 dégâts + fort recul).</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon icon-rose">🤲</div>
+                <h3>La Caresse Affectueuse</h3>
+                <p>Approchez-vous de votre cheval et faites <code>Shift + Clic Droit</code> à main nue pour lui témoigner votre affection (+5 affection, cooldown 3 min).</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon icon-emerald">🏇</div>
+                <h3>Les Voyages en Selle</h3>
+                <p>Plus vous voyagez et explorez le monde ensemble au galop, plus le lien s'intensifie naturellement avec le cumul des distances parcourues.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 3: TOILETTAGE, SOINS & ÉCURIE -->
+        <h2 class="section-title">🧼 Toilettage, Équipements & Bien-Être</h2>
+        <p class="section-desc">Des outils artisanaux pour panser le pelage, transporter des vivres et ferrer les sabots.</p>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon icon-cyan">🪮</div>
+                <h3>Brosse de Pansage</h3>
+                <p>Élimine la saleté et fait briller le pelage. Soigne 2 PV au cheval et offre <strong>+10 points d'affection</strong> instantanés.</p>
+                <div class="command-desc">Craft : Plume + Lingot de Cuivre + Laine Blanche</div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon icon-gold">📦</div>
+                <h3>Sacoche de Selle</h3>
+                <p>Fixez une sacoche en cuir sur votre monture pour ouvrir un inventaire dédié de <strong>9 emplacements</strong> (<code>Shift + Clic Droit</code>).</p>
+                <div class="command-desc">Inventaire 100% persistant (PDC) qui retombe au sol en cas de décès du cheval.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon icon-purple">🌾</div>
+                <h3>Confort du Box d'Écurie</h3>
+                <p>Si votre cheval dort dans un box aménagé (foin au sol, toit solide, eau à portée), il reçoit l'effet <strong>En pleine forme</strong> (+15 affection, moral au zénith).</p>
+            </div>
+        </div>
+
+        <!-- SECTION 4: LES FERS À CHEVAL -->
+        <h2 class="section-title">🔨 Les Fers à Cheval Éléments</h2>
+        <p class="section-desc">Équipez des fers spécialisés en faisant un simple clic droit sur votre monture.</p>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon icon-cyan">❄️</div>
+                <h3>Fers d'Hiver</h3>
+                <p>Sabots traités pour les toundras et sommets gelés. Élimine la glissade sur la glace et permet de <strong>galoper sur la poudreuse</strong> sans s'enfoncer.</p>
+                <div class="command-desc">Recette : 4 Fer + 1 Éclat d'Améthyste</div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon icon-gold">🪶</div>
+                <h3>Fers Légers</h3>
+                <p>Forgés avec précision et légèreté. Amortit les réceptions acrobatiques et <strong>réduit de 50% les dégâts de chute</strong>.</p>
+                <div class="command-desc">Recette : 4 Or + 1 Plume</div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon icon-emerald">⛰️</div>
+                <h3>Fers de Roche</h3>
+                <p>Adhérence tout-terrain. Confère l'<strong>auto-step</strong> d'1 bloc plein (<code>Attribute.STEP_HEIGHT</code>) pour franchir les dénivellations sans devoir sauter.</p>
+                <div class="command-desc">Recette : 4 Cuivre + 1 Roche Lisse</div>
+            </div>
+        </div>
+
+        <!-- SECTION 5: COMMANDES & ANALYSEUR -->
+        <h2 class="section-title">🔍 Commandes & Analyseur Équin</h2>
+        <p class="section-desc">Toutes les informations sur votre monture en un coup d'œil.</p>
+
+        <div class="card" style="margin-bottom: 2rem;">
+            <h3>L'Analyseur Équin Enrichi</h3>
+            <p>Faites un clic droit sur votre cheval avec l'Analyseur Équin pour inspecter sa fiche complète :</p>
+            <ul class="perks">
+                <li><strong>Propriétaire lié</strong> : <code>Sauvage</code> ou pseudo du maître officiel.</li>
+                <li><strong>Humeur instantanée</strong> : <code>Apeuré</code> (monstres proches sans cavalier), <code>En pleine forme</code> (box aménagé), <code>Affamé</code>, <code>Comblé d'affection</code>, <code>Détendu</code> ou <code>Paisible</code>.</li>
+                <li><strong>Barre d'amitié</strong> : Score <code>X/100</code> et palier de fidélité actif.</li>
+                <li><strong>Fers équipés</strong> : Fers d'hiver, légers ou de roche.</li>
+                <li><strong>Statut sacoche</strong> : Présente (9 slots) ou absente.</li>
+            </ul>
+        </div>
+
+        <div class="command-box">
+            <span>/elisa_version</span>
+            <span class="command-desc">Affiche la version active du plugin (alias : /elisaversion, /horse_version, /elisahorses)</span>
+        </div>
+
+        <div class="command-box">
+            <span>/elisa version</span>
+            <span class="command-desc">Sous-commande rapide de vérification de version</span>
+        </div>
+
+        <div class="command-box">
+            <span>/recipe give [Joueur] elisashorses:*</span>
+            <span class="command-desc">Débloque l'intégralité des 12 recettes artisanales du plugin</span>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>ElisasHorses Plugin — Développé avec amour pour Minecraft & PaperMC.</p>
+    </footer>
+
+</body>
+</html>

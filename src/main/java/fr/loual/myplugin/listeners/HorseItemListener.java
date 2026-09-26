@@ -103,6 +103,14 @@ public class HorseItemListener implements Listener {
         }
         lastInteractTick.put(player.getUniqueId(), currentTick);
 
+        if (isVigor || isHaste || isHealthy) {
+            fr.loual.myplugin.horses.HorseData hData = plugin.getHorseManager().getData(horse);
+            if (hData.hasOwner() && !hData.isOwner(player)) {
+                player.sendMessage("§cCe cheval appartient à " + hData.getOwnerName() + " !");
+                return;
+            }
+        }
+
         if (isVigor) {
             onVigorApple(plugin, horse, player, item);
         } else if (isHaste) {
@@ -146,6 +154,12 @@ public class HorseItemListener implements Listener {
                     return;
                 }
                 lastInteractTick.put(player.getUniqueId(), currentTick);
+
+                fr.loual.myplugin.horses.HorseData hData = plugin.getHorseManager().getData(horse);
+                if (hData.hasOwner() && !hData.isOwner(player)) {
+                    player.sendMessage("§cCe cheval appartient à " + hData.getOwnerName() + " !");
+                    return;
+                }
 
                 if (isVigor) {
                     onVigorApple(plugin, horse, player, item);
