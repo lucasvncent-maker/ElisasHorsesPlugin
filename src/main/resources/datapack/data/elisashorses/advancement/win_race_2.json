@@ -2,20 +2,20 @@
   "parent": "elisashorses:participate_to_race",
   "display": {
     "icon": {
-      "id": "minecraft:paper"
+      "id": "minecraft:nether_star"
     },
     "title": {
-      "text": "Remporter la deuxième course"
+      "text": "Légende des Hippodromes"
     },
     "description": {
-      "text": "Arrivez à la ligne d'arrivée à temps..."
+      "text": "Franchissez la ligne d'arrivée d'une course avant la fin du temps imparti !"
     },
-    "frame": "task",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true
   },
   "criteria": {
-    "observe": {
+    "win": {
       "trigger": "minecraft:impossible"
     }
   }

@@ -5,10 +5,10 @@
       "id": "minecraft:bamboo"
     },
     "title": {
-      "text": "Bambou fastueux"
+      "text": "Poussée Végétale"
     },
     "description": {
-      "text": "Fabriquez du bambou fastueux."
+      "text": "Fabriquez un Bambou Fastueux pour améliorer l'impulsion de saut de votre monture."
     },
     "frame": "task",
     "show_toast": true,
@@ -16,10 +16,7 @@
   },
   "criteria": {
     "craft": {
-      "trigger": "minecraft:recipe_crafted",
-      "conditions": {
-        "recipe_id": "elisashorses:haste_bamboo"
-      }
+      "trigger": "minecraft:impossible"
     }
   }
 }

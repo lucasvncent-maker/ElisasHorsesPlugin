@@ -36,6 +36,10 @@ public class AdvancementManager {
         }
 
         boolean alreadyInstalled = datapackFolder.exists() && new File(datapackFolder, "pack.mcmeta").exists();
+        File advDir = new File(datapackFolder, "data/elisashorses/advancement");
+        if (advDir.exists()) {
+            deleteDirectory(advDir);
+        }
         boolean copied = copyDatapack("datapack", datapackFolder);
         if (copied) {
             plugin.getLogger().info("Datapack elisashorses copié avec succès !");

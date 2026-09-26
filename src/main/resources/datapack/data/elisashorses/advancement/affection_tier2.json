@@ -1,0 +1,22 @@
+{
+  "parent": "elisashorses:groom_horse",
+  "display": {
+    "icon": {
+      "id": "minecraft:golden_carrot"
+    },
+    "title": {
+      "text": "Fidèle Destrier"
+    },
+    "description": {
+      "text": "Développez votre lien d'amitié jusqu'à 50 points d'affection pour débloquer la résistance aux chutes."
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "tier2": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

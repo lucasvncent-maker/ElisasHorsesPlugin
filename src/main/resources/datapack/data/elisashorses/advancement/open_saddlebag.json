@@ -1,0 +1,22 @@
+{
+  "parent": "elisashorses:craft_saddlebag",
+  "display": {
+    "icon": {
+      "id": "minecraft:bundle"
+    },
+    "title": {
+      "text": "Plein les Poches"
+    },
+    "description": {
+      "text": "Équipez une sacoche sur votre monture puis faites Shift + Clic Droit à mains nues pour l'ouvrir."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "open": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

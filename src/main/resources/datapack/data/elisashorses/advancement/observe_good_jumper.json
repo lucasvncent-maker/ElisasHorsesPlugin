@@ -1,16 +1,16 @@
 {
-  "parent": "elisashorses:craft_haste_bamboo",
+  "parent": "elisashorses:craft_horse_analyzer",
   "display": {
     "icon": {
       "id": "minecraft:leather_horse_armor"
     },
     "title": {
-      "text": "Bon sauteur"
+      "text": "Pur-Sang d'Élite"
     },
     "description": {
-      "text": "Observez un cheval possédant au moins 0.7 de puissance de saut."
+      "text": "Examinez un cheval possédant une détente prodigieuse (force de saut >= 0.7)."
     },
-    "frame": "task",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true
   },

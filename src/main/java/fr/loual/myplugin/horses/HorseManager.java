@@ -182,6 +182,14 @@ public class HorseManager {
                     data.addAffection(15.0);
                     horse.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, loc.add(0, 1.2, 0), 8, 0.4, 0.4, 0.4, 0.1);
                     horse.getWorld().playSound(loc, Sound.ENTITY_HORSE_AMBIENT, 1.0f, 1.2f);
+
+                    UUID ownerUuid = data.getOwnerUniqueId();
+                    if (ownerUuid != null) {
+                        Player owner = org.bukkit.Bukkit.getPlayer(ownerUuid);
+                        if (owner != null && owner.isOnline() && plugin instanceof fr.loual.myplugin.MyPlugin mp) {
+                            mp.awardAdvancement(owner, "stable_comfort");
+                        }
+                    }
                 }
             }
         }

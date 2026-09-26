@@ -2,20 +2,20 @@
   "parent": "elisashorses:adopt_horse",
   "display": {
     "icon": {
-      "id": "minecraft:spyglass"
+      "id": "minecraft:name_tag"
     },
     "title": {
-      "text": "Œil de l'Éleveur"
+      "text": "Mon Seul et Unique Destrier"
     },
     "description": {
-      "text": "Fabriquez un Analyseur Équin pour ausculter les capacités, l'humeur et l'affection d'un cheval."
+      "text": "Nommez votre cheval avec un Name Tag pour lier son âme à la vôtre et devenir son unique propriétaire."
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true
   },
   "criteria": {
-    "craft": {
+    "bind": {
       "trigger": "minecraft:impossible"
     }
   }

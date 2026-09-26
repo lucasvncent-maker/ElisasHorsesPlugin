@@ -1,0 +1,22 @@
+{
+  "parent": "elisashorses:groom_horse",
+  "display": {
+    "icon": {
+      "id": "minecraft:hay_block"
+    },
+    "title": {
+      "text": "Écurie 5 Étoiles"
+    },
+    "description": {
+      "text": "Offrez à votre cheval un abri tout confort (toit, botte de foin et eau fraîche) pour lui conférer le statut Reposé."
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "comfort": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

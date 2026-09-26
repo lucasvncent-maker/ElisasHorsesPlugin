@@ -1,0 +1,22 @@
+{
+  "parent": "elisashorses:affection_tier2",
+  "display": {
+    "icon": {
+      "id": "minecraft:totem_of_undying"
+    },
+    "title": {
+      "text": "Âmes Sœurs"
+    },
+    "description": {
+      "text": "Atteignez l'osmose absolue (100% d'affection) : votre cheval défendra votre vie par de violentes ruades !"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "tier4": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

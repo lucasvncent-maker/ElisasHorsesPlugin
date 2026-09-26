@@ -9,6 +9,10 @@ import fr.loual.myplugin.items.HealthyGrass;
 import fr.loual.myplugin.items.HorseAnalyzer;
 import fr.loual.myplugin.items.RacePass;
 import fr.loual.myplugin.items.DivineArmor;
+import fr.loual.myplugin.items.GroomingBrush;
+import fr.loual.myplugin.items.HorseWhistle;
+import fr.loual.myplugin.items.HorseshoeItem;
+import fr.loual.myplugin.items.SaddlebagItem;
 
 import fr.loual.myplugin.advancements.AdvancementManager;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -222,6 +226,26 @@ public class HorseItemListener implements Listener {
             this.advancementManager.award(player, "craft_haste_bamboo");
             return;
         }
+
+        if (GroomingBrush.isGroomingBrush(plugin, res) || res.isSimilar(GroomingBrush.create(plugin))) {
+            this.advancementManager.award(player, "craft_grooming_brush");
+            return;
+        }
+
+        if (HorseWhistle.isHorseWhistle(plugin, res) || res.isSimilar(HorseWhistle.create(plugin))) {
+            this.advancementManager.award(player, "craft_horse_whistle");
+            return;
+        }
+
+        if (SaddlebagItem.isSaddlebag(plugin, res) || res.isSimilar(SaddlebagItem.create(plugin))) {
+            this.advancementManager.award(player, "craft_saddlebag");
+            return;
+        }
+
+        if (HorseshoeItem.getHorseshoeType(plugin, res) != null) {
+            this.advancementManager.award(player, "craft_horseshoes");
+            return;
+        }
     }
 
     public void onRacePass(MyPlugin plugin, ItemStack item, Player player, PlayerInteractEvent event) {
@@ -336,6 +360,10 @@ public class HorseItemListener implements Listener {
         AttributeInstance jumpAttr = horse.getAttribute(Attribute.JUMP_STRENGTH);
         if (jumpAttr != null && jumpAttr.getValue() >= 0.7) {
             this.advancementManager.award(player, "observe_good_jumper");
+        }
+
+        if (data.isRested()) {
+            this.advancementManager.award(player, "stable_comfort");
         }
 
         if (ThreadLocalRandom.current().nextDouble() < 0.03) {

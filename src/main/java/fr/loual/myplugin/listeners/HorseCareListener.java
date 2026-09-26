@@ -69,6 +69,7 @@ public class HorseCareListener implements Listener {
             }
 
             data.setOwner(player);
+            plugin.awardAdvancement(player, "bind_owner");
             player.sendMessage(Component.text("Vous êtes désormais l'unique propriétaire de ce cheval !", NamedTextColor.GOLD));
             horse.getWorld().playSound(horse.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 0.8f, 1.3f);
             horse.getWorld().spawnParticle(Particle.HEART, horse.getLocation().add(0, 1.4, 0), 10, 0.4, 0.4, 0.4, 0.1);
@@ -134,6 +135,13 @@ public class HorseCareListener implements Listener {
         }
 
         data.pet();
+        plugin.awardAdvancement(player, "pet_horse");
+        if (data.getAffection() >= 50.0) {
+            plugin.awardAdvancement(player, "affection_tier2");
+        }
+        if (data.getAffection() >= 100.0) {
+            plugin.awardAdvancement(player, "affection_tier4");
+        }
         horse.getWorld().spawnParticle(Particle.HEART, horse.getLocation().add(0, 1.2, 0), 5, 0.3, 0.3, 0.3, 0.1);
         horse.getWorld().playSound(horse.getLocation(), Sound.ENTITY_HORSE_AMBIENT, 1.0f, 1.3f);
         player.sendMessage(Component.text("Vous caressez tendrement votre cheval (+5 affection).", NamedTextColor.LIGHT_PURPLE));
@@ -151,6 +159,13 @@ public class HorseCareListener implements Listener {
         }
 
         data.brush();
+        plugin.awardAdvancement(player, "groom_horse");
+        if (data.getAffection() >= 50.0) {
+            plugin.awardAdvancement(player, "affection_tier2");
+        }
+        if (data.getAffection() >= 100.0) {
+            plugin.awardAdvancement(player, "affection_tier4");
+        }
         horse.setHealth(Math.min(horse.getHealth() + 2.0, horse.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH).getValue()));
         horse.getWorld().spawnParticle(Particle.FIREWORK, horse.getLocation().add(0, 1.2, 0), 12, 0.4, 0.3, 0.4, 0.05);
         horse.getWorld().playSound(horse.getLocation(), Sound.ITEM_BRUSH_BRUSHING_GENERIC, 1.0f, 1.0f);
@@ -182,6 +197,7 @@ public class HorseCareListener implements Listener {
 
         data.setHorseshoeType(type.name());
         plugin.getHorseManager().applyStats(horse);
+        plugin.awardAdvancement(player, "equip_horseshoe");
 
         horse.getWorld().playSound(horse.getLocation(), Sound.BLOCK_ANVIL_USE, 1.0f, 1.2f);
         horse.getWorld().spawnParticle(Particle.CRIT, horse.getLocation().add(0, 0.5, 0), 10, 0.3, 0.2, 0.3, 0.1);
@@ -226,6 +242,7 @@ public class HorseCareListener implements Listener {
         }
         horse.getWorld().playSound(horse.getLocation(), Sound.BLOCK_CHEST_OPEN, 0.8f, 1.2f);
         player.openInventory(inv);
+        plugin.awardAdvancement(player, "open_saddlebag");
     }
 
     @EventHandler
@@ -313,6 +330,7 @@ public class HorseCareListener implements Listener {
             nearestHorse.getWorld().playSound(nearestHorse.getLocation(), Sound.ENTITY_HORSE_AMBIENT, 1.0f, 1.1f);
             player.sendMessage(Component.text("Votre fidèle destrier a rejoint vos côtés !", NamedTextColor.GREEN));
         }
+        plugin.awardAdvancement(player, "use_horse_whistle");
     }
 
     // Réduction des dégâts de chute avec les Fers Légers (FEATHER)

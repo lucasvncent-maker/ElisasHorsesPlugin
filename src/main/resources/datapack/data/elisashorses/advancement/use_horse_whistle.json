@@ -1,0 +1,22 @@
+{
+  "parent": "elisashorses:craft_horse_whistle",
+  "display": {
+    "icon": {
+      "id": "minecraft:recovery_compass"
+    },
+    "title": {
+      "text": "Au Coup de Sifflet"
+    },
+    "description": {
+      "text": "Faites retentir votre sifflet pour faire accourir votre fidèle cheval jusqu'à vos côtés."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "whistle": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

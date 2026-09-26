@@ -1,14 +1,14 @@
 {
-  "parent": "elisashorses:craft_horse_analyzer",
+  "parent": "elisashorses:bind_owner",
   "display": {
     "icon": {
-      "id": "minecraft:golden_apple"
+      "id": "minecraft:goat_horn"
     },
     "title": {
-      "text": "Carburant Doré"
+      "text": "Cor de Rappel"
     },
     "description": {
-      "text": "Fabriquez une Pomme de Vigueur pour augmenter la vitesse maximale de votre cheval."
+      "text": "Fabriquez un Sifflet de Rappel pour appeler votre monture liée à distance."
     },
     "frame": "task",
     "show_toast": true,

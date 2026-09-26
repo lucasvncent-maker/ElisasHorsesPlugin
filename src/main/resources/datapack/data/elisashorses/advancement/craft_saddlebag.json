@@ -1,14 +1,14 @@
 {
-  "parent": "elisashorses:craft_horse_analyzer",
+  "parent": "elisashorses:adopt_horse",
   "display": {
     "icon": {
-      "id": "minecraft:golden_apple"
+      "id": "minecraft:chest"
     },
     "title": {
-      "text": "Carburant Doré"
+      "text": "Barda d'Explorateur"
     },
     "description": {
-      "text": "Fabriquez une Pomme de Vigueur pour augmenter la vitesse maximale de votre cheval."
+      "text": "Fabriquez une Sacoche de Selle pour équiper votre monture d'un inventaire portatif."
     },
     "frame": "task",
     "show_toast": true,

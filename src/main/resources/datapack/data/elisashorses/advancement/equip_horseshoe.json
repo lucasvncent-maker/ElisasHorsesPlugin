@@ -1,0 +1,22 @@
+{
+  "parent": "elisashorses:craft_horseshoes",
+  "display": {
+    "icon": {
+      "id": "minecraft:anvil"
+    },
+    "title": {
+      "text": "Tout-Terrain"
+    },
+    "description": {
+      "text": "Ferrez votre monture avec des fers spéciaux pour défier les éléments (neige, chutes ou dénivelés)."
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "equip": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

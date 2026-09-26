@@ -5,17 +5,17 @@
       "id": "minecraft:paper"
     },
     "title": {
-      "text": "Première course"
+      "text": "Sur la Ligne de Départ"
     },
     "description": {
-      "text": "Participez à votre première course d'obstacles.."
+      "text": "Utilisez un Pass de Course avec un cheval pour démarrer une course d'obstacles chronométrée."
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true
   },
   "criteria": {
-    "observe": {
+    "participate": {
       "trigger": "minecraft:impossible"
     }
   }

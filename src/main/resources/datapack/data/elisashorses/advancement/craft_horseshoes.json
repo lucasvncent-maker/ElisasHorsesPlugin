@@ -1,14 +1,14 @@
 {
-  "parent": "elisashorses:craft_horse_analyzer",
+  "parent": "elisashorses:adopt_horse",
   "display": {
     "icon": {
-      "id": "minecraft:golden_apple"
+      "id": "minecraft:iron_horse_armor"
     },
     "title": {
-      "text": "Carburant Doré"
+      "text": "Maître Maréchal-Ferrant"
     },
     "description": {
-      "text": "Fabriquez une Pomme de Vigueur pour augmenter la vitesse maximale de votre cheval."
+      "text": "Fabriquez une paire de fers à cheval spéciaux (Fers d'Hiver, Fers de Plume ou Fers de Roc)."
     },
     "frame": "task",
     "show_toast": true,

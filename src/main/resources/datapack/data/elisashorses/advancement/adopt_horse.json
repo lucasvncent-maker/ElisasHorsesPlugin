@@ -5,10 +5,10 @@
       "id": "minecraft:saddle"
     },
     "title": {
-      "text": "Adopter un cheval"
+      "text": "Premier Compagnon"
     },
     "description": {
-      "text": "Adoptez votre premier cheval."
+      "text": "Apprivoisez votre premier cheval sauvage."
     },
     "frame": "task",
     "show_toast": true,
@@ -16,12 +16,7 @@
   },
   "criteria": {
     "adopt": {
-      "trigger": "minecraft:tame_animal",
-      "conditions": {
-        "entity": {
-          "entity_type": "minecraft:horse"
-        }
-      }
+      "trigger": "minecraft:impossible"
     }
   }
 }

@@ -1,21 +1,21 @@
 {
-  "parent": "elisashorses:craft_horse_analyzer",
+  "parent": "elisashorses:craft_grooming_brush",
   "display": {
     "icon": {
-      "id": "minecraft:golden_apple"
+      "id": "minecraft:feather"
     },
     "title": {
-      "text": "Carburant Doré"
+      "text": "Une Robe Étincelante"
     },
     "description": {
-      "text": "Fabriquez une Pomme de Vigueur pour augmenter la vitesse maximale de votre cheval."
+      "text": "Brossez votre cheval avec la brosse de pansage pour le rendre radieux et comblé."
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true
   },
   "criteria": {
-    "craft": {
+    "groom": {
       "trigger": "minecraft:impossible"
     }
   }

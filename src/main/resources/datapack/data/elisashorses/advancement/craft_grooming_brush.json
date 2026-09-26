@@ -1,14 +1,14 @@
 {
-  "parent": "elisashorses:craft_horse_analyzer",
+  "parent": "elisashorses:pet_horse",
   "display": {
     "icon": {
-      "id": "minecraft:golden_apple"
+      "id": "minecraft:brush"
     },
     "title": {
-      "text": "Carburant Doré"
+      "text": "Trousse de Toilettage"
     },
     "description": {
-      "text": "Fabriquez une Pomme de Vigueur pour augmenter la vitesse maximale de votre cheval."
+      "text": "Fabriquez une Brosse de Pansage pour entretenir la robe de votre monture."
     },
     "frame": "task",
     "show_toast": true,

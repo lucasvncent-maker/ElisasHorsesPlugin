@@ -1,21 +1,21 @@
 {
-  "parent": "elisashorses:craft_horse_analyzer",
+  "parent": "elisashorses:bind_owner",
   "display": {
     "icon": {
-      "id": "minecraft:golden_apple"
+      "id": "minecraft:apple"
     },
     "title": {
-      "text": "Carburant Doré"
+      "text": "Tendre Caresse"
     },
     "description": {
-      "text": "Fabriquez une Pomme de Vigueur pour augmenter la vitesse maximale de votre cheval."
+      "text": "Accroupissez-vous et caressez votre cheval les mains nues pour débuter votre complicité."
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true
   },
   "criteria": {
-    "craft": {
+    "pet": {
       "trigger": "minecraft:impossible"
     }
   }
