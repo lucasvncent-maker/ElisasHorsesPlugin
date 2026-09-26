@@ -35,10 +35,14 @@ public class AdvancementManager {
             deleteDirectory(oldDatapack);
         }
 
+        boolean alreadyInstalled = datapackFolder.exists() && new File(datapackFolder, "pack.mcmeta").exists();
         boolean copied = copyDatapack("datapack", datapackFolder);
         if (copied) {
             plugin.getLogger().info("Datapack elisashorses copié avec succès !");
-            Bukkit.reloadData();
+            if (!alreadyInstalled) {
+                plugin.getLogger().info("Premier déploiement du datapack : rechargement des données...");
+                Bukkit.reloadData();
+            }
         }
     }
 

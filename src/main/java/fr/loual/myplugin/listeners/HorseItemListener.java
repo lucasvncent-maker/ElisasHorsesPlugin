@@ -161,7 +161,9 @@ public class HorseItemListener implements Listener {
     @EventHandler
     public void onPlayerJoin(org.bukkit.event.player.PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        this.advancementManager.discoverRecipe(player, "horse_analyzer");
+        if (plugin.getHorseRecipeManager() != null) {
+            plugin.getHorseRecipeManager().discoverAll(player);
+        }
     }
 
     @EventHandler

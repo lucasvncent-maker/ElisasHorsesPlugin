@@ -16,9 +16,7 @@ public class RacePassRecipe {
         ShapedRecipe recipe = new ShapedRecipe(key, result);
 
         recipe.shape(
-                "   ",
-                "HPA",
-                "   "
+                "HPA"
         );
 
         recipe.setIngredient('H', Material.HAY_BLOCK);

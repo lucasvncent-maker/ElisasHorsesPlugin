@@ -7,12 +7,7 @@ import fr.loual.myplugin.commands.ElisaVersion;
 import fr.loual.myplugin.commands.StartRace;
 import fr.loual.myplugin.commands.StopRace;
 
-import fr.loual.myplugin.recipes.VigorAppleRecipe;
-import fr.loual.myplugin.recipes.HorseAnalyzerRecipe;
-import fr.loual.myplugin.recipes.HasteBambooRecipe;
-import fr.loual.myplugin.recipes.HealthyGrassRecipe;
-import fr.loual.myplugin.recipes.DivineArmorRecipe;
-import fr.loual.myplugin.recipes.RacePassRecipe;
+import fr.loual.myplugin.recipes.HorseRecipeManager;
 import org.bukkit.Bukkit;
 
 import fr.loual.myplugin.horses.HorseManager;
@@ -38,6 +33,7 @@ public class MyPlugin extends JavaPlugin {
     private final HorseManager horseManager = new HorseManager();
     private HorseRaceManager horseRaceManager;
     private AdvancementManager advancementManager;
+    private HorseRecipeManager horseRecipeManager;
 
     @Override
     public void onEnable() {
@@ -51,19 +47,25 @@ public class MyPlugin extends JavaPlugin {
         getCommand("stop_race").setExecutor(new StopRace(this));
         getCommand("elisa_version").setExecutor(new ElisaVersion(this));
 
-        VigorAppleRecipe.register(this);
-        HorseAnalyzerRecipe.register(this);
-        HasteBambooRecipe.register(this);
-        HealthyGrassRecipe.register(this);
-        DivineArmorRecipe.register(this);
-        RacePassRecipe.register(this);
+        this.horseRecipeManager = new HorseRecipeManager(this);
+        this.horseRecipeManager.registerRecipes();
+        getServer().getPluginManager().registerEvents(this.horseRecipeManager, this);
 
         getServer().getPluginManager().registerEvents(new HorseItemListener(this), this);
         getServer().getPluginManager().registerEvents(new HorseRaceListener(this), this);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            p.discoverRecipe(new NamespacedKey(this, "horse_analyzer"));
+            this.horseRecipeManager.discoverAll(p);
         }
+
+        // Sécurité supplémentaire : réenregistrer et débloquer au tick suivant
+        // au cas où un rechargement de ressources (datapack) a eu lieu durant le chargement
+        Bukkit.getScheduler().runTask(this, () -> {
+            this.horseRecipeManager.registerRecipes();
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                this.horseRecipeManager.discoverAll(p);
+            }
+        });
 
         getLogger().info("ElisasHorses est activé !");
 
@@ -131,6 +133,10 @@ public class MyPlugin extends JavaPlugin {
 
     public AdvancementManager getAdvancementManager() {
         return advancementManager;
+    }
+
+    public HorseRecipeManager getHorseRecipeManager() {
+        return horseRecipeManager;
     }
 
 }
