@@ -1,5 +1,5 @@
 name: ElisasHorses
-version: 1.0.0
+version: 1.1.0
 main: fr.loual.myplugin.MyPlugin
 api-version: '26.2'
 
@@ -17,3 +17,11 @@ commands:
   stop_race:
     description: Arrête la course actuelle
     usage: /stop_race
+  elisa_version:
+    description: Affiche la version actuelle du plugin ElisasHorses
+    usage: /elisa_version
+    aliases:
+      - elisaversion
+      - horse_version
+      - horseversion
+      - elisahorses

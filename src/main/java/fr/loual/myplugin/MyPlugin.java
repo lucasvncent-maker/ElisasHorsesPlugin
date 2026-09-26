@@ -3,6 +3,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.loual.myplugin.commands.Coords;
 import fr.loual.myplugin.commands.Elisa;
+import fr.loual.myplugin.commands.ElisaVersion;
 import fr.loual.myplugin.commands.StartRace;
 import fr.loual.myplugin.commands.StopRace;
 
@@ -45,9 +46,10 @@ public class MyPlugin extends JavaPlugin {
         horseRaceManager = new HorseRaceManager(this);
 
         getCommand("coords").setExecutor(new Coords());
-        getCommand("elisa").setExecutor(new Elisa());
+        getCommand("elisa").setExecutor(new Elisa(this));
         getCommand("start_race").setExecutor(new StartRace(this));
         getCommand("stop_race").setExecutor(new StopRace(this));
+        getCommand("elisa_version").setExecutor(new ElisaVersion(this));
 
         VigorAppleRecipe.register(this);
         HorseAnalyzerRecipe.register(this);
